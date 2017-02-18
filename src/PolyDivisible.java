@@ -137,6 +137,27 @@ public class PolyDivisible
 				}
 			}
 		}
+		
+		if(num.length() > 5)
+		{
+			for(int i = 3; i < num.length(); i = i + 2)
+			{
+					int firstGroup = Integer.parseInt(num.substring(0,i));
+					if(firstGroup%(i) != 0)
+					{
+						String toAdd = "1";
+						String end = num.substring(i+1, num.length());
+						for(int in = 0; in < end.length(); in++)
+						{
+							toAdd = toAdd + "0";
+						}
+						
+						int res = num1 + Integer.parseInt(toAdd);
+						return res;
+					}
+			}
+		}
+		
 		return num1 + 1;
 	}
 	
@@ -161,6 +182,27 @@ public class PolyDivisible
 				}
 			}
 		}
+		
+		if(num.length() > 5)
+		{
+			for(int i = 3; i < num.length(); i = i + 2)
+			{
+					long firstGroup = Long.parseLong(num.substring(0,i));
+					if(firstGroup%(i) != 0)
+					{
+						String toAdd = "1";
+						String end = num.substring(i+1, num.length());
+						for(int in = 0; in < end.length(); in++)
+						{
+							toAdd = toAdd + "0";
+						}
+						
+						long res = num1 + Long.parseLong(toAdd);
+						return res;
+					}
+			}
+		}
+		
 		return num1 + 1;
 	}
 	
@@ -185,6 +227,28 @@ public class PolyDivisible
 				}
 			}
 		}
+		
+		if(num.length() > 5)
+		{
+			for(int i = 3; i < num.length(); i = i + 2)
+			{
+					BigInteger firstGroup = new BigInteger(num.substring(0,i));
+					BigInteger i1 = new BigInteger("" + i);
+					if(!firstGroup.mod(i1).equals(BigInteger.ZERO))
+					{
+						String toAdd = "1";
+						String end = num.substring(i+1, num.length());
+						for(int in = 0; in < end.length(); in++)
+						{
+							toAdd = toAdd + "0";
+						}
+						
+						BigInteger res = num1.add(new BigInteger(toAdd));
+						return res;
+					}
+			}
+		}
+		
 		return num1.add(BigInteger.ONE);
 	}
 	
