@@ -10,8 +10,16 @@ public class Narcissistic
 		File f = new File("NarcissisticNumbers.txt");
 		PrintWriter out = new PrintWriter(f);
 		
-		findNumbers(out);
-		out.close();		
+		long start = System.nanoTime();
+		findNumbers(out, 30);
+		long end = System.nanoTime();
+		long duration = end - start;
+		Timer.calculate(duration);
+		String lastLine = Timer.calculate(duration);
+		
+		out.println("");
+		out.println(lastLine);
+		out.close();	
 	}
 	
 	/**
@@ -21,9 +29,12 @@ public class Narcissistic
 	 * It also returns what number it currently is at, every million numbers
 	 * @param out where the list is written to
 	 */
-	public static void findNumbers(PrintWriter out)
+	public static void findNumbers(PrintWriter out, int target)
 	{
 		//keeps track of how many have been found
+		int found = 0;
+		
+		//keeps track of the current number
 		int curInt = 0;
 		
 		while(curInt != -2147483648)
@@ -38,6 +49,11 @@ public class Narcissistic
 			{
 				System.out.println(curInt);
 			}
+			if(found == target)
+			{
+				return;
+			}
+			
 			curInt = curInt + 1;
 		}
 		
@@ -58,6 +74,11 @@ public class Narcissistic
 			{
 				System.out.println(curLong);
 			}
+			if(found == target)
+			{
+				return;
+			}
+			
 			curLong = curLong + 1;		
 		}
 		
@@ -77,6 +98,11 @@ public class Narcissistic
 			{
 				System.out.println(bigCur.toString());
 			}
+			if(found == target)
+			{
+				return;
+			}
+			
 			bigCur = bigCur.add(BigInteger.ONE);	
 		}
 	}

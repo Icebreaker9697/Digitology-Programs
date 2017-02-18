@@ -11,19 +11,30 @@ public class PolyDivisible
 	{
 		File f = new File("PolyDivisibleNumbers.txt");
 		PrintWriter out = new PrintWriter(f);
-			
-		findNumbers(out);
+		
+		long start = System.nanoTime();
+		findNumbers(out, 10000);
+		long end = System.nanoTime();
+		
+		long duration = end - start;
+		Timer.calculate(duration);
+		String lastLine = Timer.calculate(duration);
+		
+		out.println("");
+		out.println(lastLine);
 		out.close();
 	}
 	
 	/**
 	 * Generates a list of Polydivisible numbers.
 	 * It starts the calculations as using ints, and then moves up to longs
-	 * and then finally up to BigIntegers
+	 * and then finally up to BigIntegers, and keeps calculating until it has found the
+	 * target number of numbers
 	 * It also returns how many have been found for every hundred found
 	 * @param out where the list is written to
+	 * @param howMany how many numbers to find before exiting
 	 */
-	public static void findNumbers(PrintWriter out)
+	public static void findNumbers(PrintWriter out, int target)
 	{
 		//keeps track of how many numbers have been found
 		int found = 0;
@@ -32,23 +43,25 @@ public class PolyDivisible
 		int curInt = 1;
 		
 		//start as an int
-		while(curInt != -2147483648)
+		while(curInt != -2147483648 && found < 10000)
 		{
 			if(isPolyDivisibleInt(curInt))
 			{
 				out.println(curInt);
+				out.flush();
 				found = found + 1;
 				if(found%100 == 0)
 				{
 					System.out.println(found);
 				}
-				else if(found == 20456)
+				if(found == target)
 				{
-					break;
+					return;
 				}
 			}
 			curInt = curInt + 1;
 		}
+		
 		
 		//rollover number to a long
 		long curLong = 2147483648L;
@@ -58,14 +71,15 @@ public class PolyDivisible
 			if(isPolyDivisibleLong(curLong))
 			{
 				out.println(curLong);
+				out.flush();
 				found = found + 1;
 				if(found%100 == 0)
 				{
 					System.out.println(found);
 				}
-				else if(found == 20456)
+				if(found == target)
 				{
-					break;
+					return;
 				}
 			}
 			curLong = curLong + 1;
@@ -80,14 +94,15 @@ public class PolyDivisible
 			if(isPolyDivisibleBig(bigCur))
 			{
 				out.println(bigCur);
+				out.flush();
 				found = found + 1;
 				if(found%100 == 0)
 				{
 					System.out.println(found);
 				}
-				else if(found == 20456)
+				if(found == target)
 				{
-					break;
+					return;
 				}
 			}
 			bigCur = bigCur.add(BigInteger.ONE);
