@@ -10,6 +10,7 @@ public class PolyDivisible
 		File f = new File("PolyDivisibleNumbers.txt");
 		PrintWriter out = new PrintWriter(f);
 		
+		//20456
 		long start = System.nanoTime();
 		findNumbers(out, 10000);
 		long end = System.nanoTime();
@@ -48,7 +49,7 @@ public class PolyDivisible
 				out.println(curInt);
 				out.flush();
 				found = found + 1;
-				if(found%100 == 0)
+				if(found%1000 == 0)
 				{
 					System.out.println(found);
 				}
@@ -71,7 +72,7 @@ public class PolyDivisible
 				out.println(curLong);
 				out.flush();
 				found = found + 1;
-				if(found%100 == 0)
+				if(found%1000 == 0)
 				{
 					System.out.println(found);
 				}
@@ -118,29 +119,10 @@ public class PolyDivisible
 	public static int nextInt(int num1)
 	{
 		String num = "" + num1;
-		for(int i = 0; i < num.length(); i++)
-		{
-			if(i%2 == 1 && i != num.length() - 1)
-			{
-				int tmp = Integer.parseInt(num.substring(i, i+1));
-				if(tmp%2 != 0)
-				{
-					String toAdd = "1";
-					String end = num.substring(i+1, num.length());
-					for(int in = 0; in < end.length(); in++)
-					{
-						toAdd = toAdd + "0";
-					}
-					
-					int res = num1 + Integer.parseInt(toAdd);
-					return res;
-				}
-			}
-		}
 		
-		if(num.length() > 5)
+		if(num.length() > 2)
 		{
-			for(int i = 3; i < num.length(); i = i + 2)
+			for(int i = 1; i < num.length(); i++)
 			{
 					int firstGroup = Integer.parseInt(num.substring(0,i));
 					if(firstGroup%(i) != 0)
@@ -164,28 +146,10 @@ public class PolyDivisible
 	public static long nextLong(long num1)
 	{
 		String num = "" + num1;
-		for(int i = 0; i < num.length(); i++)
+
+		if(num.length() > 2)
 		{
-			if(i%2 == 1 && i != num.length() - 1)
-			{
-				int tmp = Integer.parseInt(num.substring(i, i+1));
-				if(tmp%2 != 0)
-				{
-					String toAdd = "1";
-					String end = num.substring(i+1, num.length());
-					for(int in = 0; in < end.length(); in++)
-					{
-						toAdd = toAdd + "0";
-					}
-					
-					return num1 + Long.parseLong(toAdd);
-				}
-			}
-		}
-		
-		if(num.length() > 5)
-		{
-			for(int i = 3; i < num.length(); i = i + 2)
+			for(int i = 1; i < num.length(); i++)
 			{
 					long firstGroup = Long.parseLong(num.substring(0,i));
 					if(firstGroup%(i) != 0)
@@ -209,28 +173,10 @@ public class PolyDivisible
 	public static BigInteger nextBig(BigInteger num1)
 	{
 		String num = "" + num1;
-		for(int i = 0; i < num.length(); i++)
-		{
-			if(i%2 == 1 && i != num.length() - 1)
-			{
-				int tmp = Integer.parseInt(num.substring(i, i+1));
-				if(tmp%2 != 0)
-				{
-					String toAdd = "1";
-					String end = num.substring(i+1, num.length());
-					for(int in = 0; in < end.length(); in++)
-					{
-						toAdd = toAdd + "0";
-					}
-					
-					return num1.add(new BigInteger(toAdd));
-				}
-			}
-		}
 		
-		if(num.length() > 5)
+		if(num.length() > 2)
 		{
-			for(int i = 3; i < num.length(); i = i + 2)
+			for(int i = 3; i < num.length(); i++)
 			{
 					BigInteger firstGroup = new BigInteger(num.substring(0,i));
 					BigInteger i1 = new BigInteger("" + i);

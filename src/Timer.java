@@ -19,6 +19,7 @@ public class Timer
 	 */
 	public static String calculate(long duration)
 	{
+		int milliseconds = (int) duration/1000000;
 		long seconds = duration/1000000000;
 		int hrs = 0;
 		int mins = 0;
@@ -44,7 +45,11 @@ public class Timer
 		}
 		if(seconds > 0)
 		{
-			lastLine = lastLine + seconds + " seconds";
+			lastLine = lastLine + seconds + " seconds ";
+		}
+		if(milliseconds > 0)
+		{
+			lastLine = lastLine + milliseconds + " milliseconds";
 		}
 		
 		return lastLine;
