@@ -1,5 +1,3 @@
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -45,10 +43,6 @@ public class PolyDivisible
 		//start as an int
 		while(curInt > 0)
 		{
-			if(curInt == 2100000000)
-			{
-				System.out.println(curInt);
-			}
 			if(isPolyDivisibleInt(curInt))
 			{
 				out.println(curInt);
@@ -63,7 +57,7 @@ public class PolyDivisible
 					return;
 				}
 			}
-			curInt = nextInt(curInt);
+			curInt = curInt + 1;
 		}
 		
 		
@@ -86,7 +80,7 @@ public class PolyDivisible
 					return;
 				}
 			}
-			curLong = nextLong(curLong);
+			curLong = curLong + 1;
 		}
 		
 		
@@ -109,88 +103,8 @@ public class PolyDivisible
 					return;
 				}
 			}
-			bigCur = nextBig(bigCur);
+			bigCur = bigCur.add(BigInteger.ONE);
 		}
-	}
-	
-	/**
-	 * Checks if every other index (starting with the second digit)
-	 * is even, because polydivisible numbers must have this form. If it isnt, it
-	 * increases that index by one, to shortcut many values that would not be polydivisible
-	 * with that particular index being odd
-	 * @param num1 the number to look at
-	 * @return a number which has better polydivisible potential
-	 */
-	public static int nextInt(int num1)
-	{
-		String num = "" + num1;
-		for(int i = 0; i < num.length(); i++)
-		{
-			if(i%2 == 1 && i != num.length() - 1)
-			{
-				int tmp = Integer.parseInt(num.substring(i, i+1));
-				if(tmp%2 != 0)
-				{
-					String toAdd = "1";
-					String end = num.substring(i+1, num.length());
-					for(int in = 0; in < end.length(); in++)
-					{
-						toAdd = toAdd + "0";
-					}
-					
-					return num1 + Integer.parseInt(toAdd);
-				}
-			}
-		}
-		return num1 + 1;
-	}
-	
-	public static long nextLong(long num1)
-	{
-		String num = "" + num1;
-		for(int i = 0; i < num.length(); i++)
-		{
-			if(i%2 == 1 && i != num.length() - 1)
-			{
-				int tmp = Integer.parseInt(num.substring(i, i+1));
-				if(tmp%2 != 0)
-				{
-					String toAdd = "1";
-					String end = num.substring(i+1, num.length());
-					for(int in = 0; in < end.length(); in++)
-					{
-						toAdd = toAdd + "0";
-					}
-					
-					return num1 + Long.parseLong(toAdd);
-				}
-			}
-		}
-		return num1 + 1;
-	}
-	
-	public static BigInteger nextBig(BigInteger num1)
-	{
-		String num = "" + num1;
-		for(int i = 0; i < num.length(); i++)
-		{
-			if(i%2 == 1 && i != num.length() - 1)
-			{
-				int tmp = Integer.parseInt(num.substring(i, i+1));
-				if(tmp%2 != 0)
-				{
-					String toAdd = "1";
-					String end = num.substring(i+1, num.length());
-					for(int in = 0; in < end.length(); in++)
-					{
-						toAdd = toAdd + "0";
-					}
-					
-					return num1.add(new BigInteger(toAdd));
-				}
-			}
-		}
-		return num1.add(BigInteger.ONE);
 	}
 	
 	/**
