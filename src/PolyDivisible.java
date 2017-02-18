@@ -57,12 +57,12 @@ public class PolyDivisible
 					return;
 				}
 			}
-			curInt = curInt + 1;
+			curInt = nextInt(curInt);
 		}
 		
 		
 		//rollover number to a long
-		long curLong = 2147483648L;
+		long curLong = 2100000000L;
 		
 		while(curLong > 0)
 		{
@@ -80,12 +80,12 @@ public class PolyDivisible
 					return;
 				}
 			}
-			curLong = curLong + 1;
+			curLong = nextLong(curLong);
 		}
 		
 		
 		//convert over to BigInteger
-		BigInteger bigCur = new BigInteger( "9223372036854775808");
+		BigInteger bigCur = new BigInteger("9220000000000000000");
 		
 		while(true)
 		{
@@ -103,8 +103,89 @@ public class PolyDivisible
 					return;
 				}
 			}
-			bigCur = bigCur.add(BigInteger.ONE);
+			bigCur = nextBig(bigCur);
 		}
+	}
+	
+	/**
+	 * Checks if every other index (starting with the second digit)
+	 * is even, because polydivisible numbers must have this form. If it isnt, it
+	 * increases that index by one, to shortcut many values that would not be polydivisible
+	 * with that particular index being odd
+	 * @param num1 the number to look at
+	 * @return a number which has better polydivisible potential
+	 */
+	public static int nextInt(int num1)
+	{
+		String num = "" + num1;
+		for(int i = 0; i < num.length(); i++)
+		{
+			if(i%2 == 1 && i != num.length() - 1)
+			{
+				int tmp = Integer.parseInt(num.substring(i, i+1));
+				if(tmp%2 != 0)
+				{
+					String toAdd = "1";
+					String end = num.substring(i+1, num.length());
+					for(int in = 0; in < end.length(); in++)
+					{
+						toAdd = toAdd + "0";
+					}
+					
+					int res = num1 + Integer.parseInt(toAdd);
+					return res;
+				}
+			}
+		}
+		return num1 + 1;
+	}
+	
+	public static long nextLong(long num1)
+	{
+		String num = "" + num1;
+		for(int i = 0; i < num.length(); i++)
+		{
+			if(i%2 == 1 && i != num.length() - 1)
+			{
+				int tmp = Integer.parseInt(num.substring(i, i+1));
+				if(tmp%2 != 0)
+				{
+					String toAdd = "1";
+					String end = num.substring(i+1, num.length());
+					for(int in = 0; in < end.length(); in++)
+					{
+						toAdd = toAdd + "0";
+					}
+					
+					return num1 + Long.parseLong(toAdd);
+				}
+			}
+		}
+		return num1 + 1;
+	}
+	
+	public static BigInteger nextBig(BigInteger num1)
+	{
+		String num = "" + num1;
+		for(int i = 0; i < num.length(); i++)
+		{
+			if(i%2 == 1 && i != num.length() - 1)
+			{
+				int tmp = Integer.parseInt(num.substring(i, i+1));
+				if(tmp%2 != 0)
+				{
+					String toAdd = "1";
+					String end = num.substring(i+1, num.length());
+					for(int in = 0; in < end.length(); in++)
+					{
+						toAdd = toAdd + "0";
+					}
+					
+					return num1.add(new BigInteger(toAdd));
+				}
+			}
+		}
+		return num1.add(BigInteger.ONE);
 	}
 	
 	/**
