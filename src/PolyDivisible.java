@@ -1,5 +1,3 @@
-
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -43,7 +41,7 @@ public class PolyDivisible
 		int curInt = 1;
 		
 		//start as an int
-		while(curInt != -2147483648 && found < 10000)
+		while(curInt > 0)
 		{
 			if(isPolyDivisibleInt(curInt))
 			{
@@ -66,7 +64,7 @@ public class PolyDivisible
 		//rollover number to a long
 		long curLong = 2147483648L;
 		
-		while(curLong != -9223372036854775808L)
+		while(curLong > 0)
 		{
 			if(isPolyDivisibleLong(curLong))
 			{
