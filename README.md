@@ -1,2 +1,2 @@
-# Numerology-Programs
-Some programs I made to find interesting numbers
+# Digitology-Programs
+Some programs I made to find interesting numbers in base10
