@@ -16,6 +16,13 @@ public class PolyDivisible
 		out.close();
 	}
 	
+	/**
+	 * Generates a list of Polydivisible numbers.
+	 * It starts the calculations as using ints, and then moves up to longs
+	 * and then finally up to BigIntegers
+	 * It also returns how many have been found for every hundred found
+	 * @param out where the list is written to
+	 */
 	public static void findNumbers(PrintWriter out)
 	{
 		//keeps track of how many numbers have been found
