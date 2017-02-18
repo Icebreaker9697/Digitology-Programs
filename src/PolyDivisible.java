@@ -62,7 +62,7 @@ public class PolyDivisible
 		
 		
 		//rollover number to a long
-		long curLong = 2147483648L;
+		long curLong = 2100000000L;
 		
 		while(curLong > 0)
 		{
@@ -85,7 +85,7 @@ public class PolyDivisible
 		
 		
 		//convert over to BigInteger
-		BigInteger bigCur = new BigInteger( "9223372036854775808");
+		BigInteger bigCur = new BigInteger("9220000000000000000");
 		
 		while(true)
 		{
@@ -132,7 +132,8 @@ public class PolyDivisible
 						toAdd = toAdd + "0";
 					}
 					
-					return num1 + Integer.parseInt(toAdd);
+					int res = num1 + Integer.parseInt(toAdd);
+					return res;
 				}
 			}
 		}
