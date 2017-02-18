@@ -7,12 +7,12 @@ public class PolyDivisible
 {
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		File f = new File("PolyDivisibleNumbers.txt");
+		File f = new File("Number Lists/Base10PolyDivisibleNumbers.txt");
 		PrintWriter out = new PrintWriter(f);
 		
 		//20456
 		long start = System.nanoTime();
-		findNumbers(out, 10000);
+		findNumbers(out, 20456);
 		long end = System.nanoTime();
 		
 		long duration = end - start;
@@ -38,11 +38,11 @@ public class PolyDivisible
 		//keeps track of how many numbers have been found
 		int found = 0;
 		
-		//start at 1 and count up
-		int curInt = 1;
+		//start at 0 and count up
+		int curInt = 0;
 		
 		//start as an int
-		while(curInt > 0)
+		while(curInt >= 0)
 		{
 			if(isPolyDivisibleInt(curInt))
 			{
@@ -96,6 +96,10 @@ public class PolyDivisible
 				out.flush();
 				found = found + 1;
 				if(found%100 == 0)
+				{
+					System.out.println(found);
+				}
+				if(found > 20400)
 				{
 					System.out.println(found);
 				}
@@ -210,12 +214,6 @@ public class PolyDivisible
 	{
 		String numString = num.toString();
 		
-		//polydivisible numbers can't be only one digit
-		if(numString.length() == 1)
-		{
-			return false;
-		}
-		
 		//for each index, check if the number formed by the digits to the 
 		//left of and including the current index is evenly divisible by its
 		//position in the overall number.
@@ -251,11 +249,6 @@ public class PolyDivisible
 	{
 		String numString = "" + num;
 		
-		if(numString.length() == 1)
-		{
-			return false;
-		}
-		
 		for(int i = 0; i < numString.length(); i++)
 		{
 			String tmp = numString.substring(0,i+1);
@@ -283,7 +276,7 @@ public class PolyDivisible
 		
 		if(numString.length() == 1)
 		{
-			return false;
+			return true;
 		}
 		
 		for(int i = 0; i < numString.length(); i++)

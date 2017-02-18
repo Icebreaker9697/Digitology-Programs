@@ -7,7 +7,7 @@ public class Narcissistic
 {
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		File f = new File("NarcissisticNumbers.txt");
+		File f = new File("Number Lists/NarcissisticNumbers.txt");
 		PrintWriter out = new PrintWriter(f);
 		
 		long start = System.nanoTime();
@@ -43,7 +43,7 @@ public class Narcissistic
 			{
 				out.println(curInt);
 				out.flush();
-				
+				found++;			
 			}
 			if(curInt%1000000 == 0)
 			{
