@@ -16,8 +16,7 @@ public class PolyDivisible
 		long end = System.nanoTime();
 		
 		long duration = end - start;
-		Timer.calculate(duration);
-		String lastLine = Timer.calculate(duration);
+		String lastLine = Utility.calculateTime(duration);
 		
 		out.println("");
 		out.println(lastLine);

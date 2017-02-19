@@ -2,13 +2,13 @@
 	 * A class that converts a difference between 
 	 * System.nanoTime values into an easily readable string
 	 */
-public class Timer
+public class Utility
 {
 	
 	/**
 	 * Constructor
 	 */
-	public Timer()
+	public Utility()
 	{
 	}
 	
@@ -17,9 +17,9 @@ public class Timer
 	 * @param duration difference between System.nanoTime values
 	 * @return the generated string
 	 */
-	public static String calculate(long duration)
+	public static String calculateTime(long duration)
 	{
-		int milliseconds = (int) duration/1000000;
+		int milliseconds = (int) (duration%1000000000)/1000000;
 		long seconds = duration/1000000000;
 		int hrs = 0;
 		int mins = 0;
@@ -53,5 +53,21 @@ public class Timer
 		}
 		
 		return lastLine;
+	}
+	
+	/**
+	 * This is a simple power method, which was written, because the java Math.pow
+	 * was cutting off some digits at the end of huge calculations, and that
+	 * was messing up the whole program
+	 */
+	public static long pow(int base, int power)
+	{
+		long result = base;
+		for(int i = 0; i < power - 1; i++)
+		{
+			result = result*base;
+		}
+		
+		return result;
 	}
 }
