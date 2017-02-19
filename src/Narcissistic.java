@@ -5,6 +5,7 @@ import java.math.BigInteger;
 
 public class Narcissistic
 {
+	private static int found;
 	public static void main(String[] args) throws FileNotFoundException
 	{
 		File f = new File("Number Lists/NarcissisticNumbers.txt");
@@ -14,8 +15,7 @@ public class Narcissistic
 		findNumbers(out, 30);
 		long end = System.nanoTime();
 		long duration = end - start;
-		Timer.calculate(duration);
-		String lastLine = Timer.calculate(duration);
+		String lastLine = Utility.calculateTime(duration);
 		
 		out.println("");
 		out.println(lastLine);
@@ -32,79 +32,294 @@ public class Narcissistic
 	public static void findNumbers(PrintWriter out, int target)
 	{
 		//keeps track of how many have been found
-		int found = 0;
+		found = 0;
 		
 		//keeps track of the current number
 		int curInt = 0;
 		
-		while(curInt != -2147483648)
+		//keeps track of the current million
+		long lastOrder = 0;
+		
+		while(curInt >= 0)
 		{
-			if(isNarcissisticInt(curInt))
+			curInt = nextInt(curInt, out);
+			
+			if((curInt/10000000)*10000000 != lastOrder)
 			{
-				out.println(curInt);
-				out.flush();
-				found++;			
-			}
-			if(curInt%1000000 == 0)
-			{
-				System.out.println(curInt);
+				lastOrder = (curInt/10000000)*10000000;
+				System.out.println((curInt/10000000)*10000000);
 			}
 			if(found == target)
 			{
 				return;
 			}
-			
-			curInt = curInt + 1;
 		}
 		
 //		rollover number to a long
-		long curLong = 2147483648L;
-
+		long curLong = 2100000000L;
 		
-		
-		while(curLong != -9223372036854775808L)
+		while(curLong > 0)
 		{
-			if(isNarcissisticLong(curLong))
+			curLong = nextLong(curLong, out);
+			
+			if((curLong/100000000)*100000000 != lastOrder)
 			{
-				out.println(curLong);
-				out.flush();
-				
-			}
-			if(curLong%1000000 == 0)
-			{
-				System.out.println(curLong);
+				lastOrder = (curLong/100000000)*100000000;
+				System.out.println((curLong/100000000)*100000000);
 			}
 			if(found == target)
 			{
 				return;
-			}
-			
-			curLong = curLong + 1;		
+			}	
 		}
 		
 		//convert over to BigInteger
-		BigInteger bigCur = new BigInteger( "9223372036854775808");
-
+		BigInteger bigCur = new BigInteger("9220000000000000000");
 		
 		while(true)
 		{
-			if(isNarcissisticBig(bigCur))
+			bigCur = nextBig(bigCur, out);
+			
+			if(!(bigCur.divide(new BigInteger("" + 10000000000L))).multiply(new BigInteger("" + 10000000000L)).equals(new BigInteger("" + lastOrder)))
 			{
-				out.println(bigCur.toString());
-				out.flush();
-				
-			}
-			if(bigCur.mod(new BigInteger("1000000")).equals(BigInteger.ZERO))
-			{
-				System.out.println(bigCur.toString());
+				lastOrder = (curLong/10000000000L)*10000000000L;
+				System.out.println((curLong/10000000000L)*10000000000L);
 			}
 			if(found == target)
 			{
 				return;
-			}
-			
-			bigCur = bigCur.add(BigInteger.ONE);	
+			}	
 		}
+	}
+	
+	public static int nextInt(int num, PrintWriter out)
+	{
+		int res = 0;
+		int tmp = 0;
+		String numString = "" + num;
+		int power = numString.length();
+		
+		for(int i = 0; i < numString.length() - 1; i++)
+		{
+			int base = Integer.parseInt(numString.substring(i, i+1));
+			tmp = tmp + (int) Utility.pow(base, power);
+			
+			if(tmp > num && i == 0)
+			{
+				String first = "" + 1;
+				
+				String zeros = "";
+				for(int in = 0; in < numString.length(); in++)
+				{
+					zeros = zeros + "0";
+				}
+				
+				String full = first + zeros;
+				
+				res = Integer.parseInt(full);
+				break;
+			}
+			else if(tmp > num && i == 1)
+			{
+				String first = "" + (Integer.parseInt("" + numString.charAt(0)) + 1);
+				String zeros = "";
+				String end = numString.substring(i, numString.length());
+				for(int in = 0; in < end.length(); in++)
+				{
+					zeros = zeros + "0";
+				}
+				
+				String full = first + zeros;
+				
+				res = Integer.parseInt(full);
+				break;
+			}
+			else if(tmp > num)
+			{
+				String firstHalf = "" + (Integer.parseInt(numString.substring(0,i)) + 1);
+				
+				String zeros = "";
+				String end = numString.substring(i, numString.length());
+				for(int in = 0; in < end.length(); in++)
+				{
+					zeros = zeros + "0";
+				}
+				
+				String full = firstHalf + zeros;
+				
+				res = Integer.parseInt(full);
+				break;
+			}
+		}
+		
+		if(res == 0)
+		{
+			int base = Integer.parseInt(numString.substring(numString.length() -1, numString.length()));
+			tmp = tmp + (int) Utility.pow(base, power);
+			if(tmp == num && num != 0)
+			{
+				out.println(num);
+				out.flush();
+				found++;
+			}
+			res = num + 1;
+		}
+		
+		return res;
+	}
+	
+	public static long nextLong(long num, PrintWriter out)
+	{
+		long res = 0;
+		long tmp = 0;
+		String numString = "" + num;
+		int power = numString.length();
+		
+		for(int i = 0; i < numString.length() - 1; i++)
+		{
+			int base = Integer.parseInt(numString.substring(i, i+1));
+			tmp = tmp + Utility.pow(base, power);
+			
+			if(tmp > num && i == 0)
+			{
+				String first = "" + 1;
+				
+				String zeros = "";
+				for(int in = 0; in < numString.length(); in++)
+				{
+					zeros = zeros + "0";
+				}
+				
+				String full = first + zeros;
+				
+				res = Long.parseLong(full);
+				break;
+			}
+			else if(tmp > num && i == 1)
+			{
+				String first = "" + (Long.parseLong("" + numString.charAt(0)) + 1);
+				String zeros = "";
+				String end = numString.substring(i, numString.length());
+				for(int in = 0; in < end.length(); in++)
+				{
+					zeros = zeros + "0";
+				}
+				
+				String full = first + zeros;
+				
+				res = Long.parseLong(full);
+				break;
+			}
+			else if(tmp > num)
+			{
+				String firstHalf = "" + (Long.parseLong(numString.substring(0,i)) + 1);
+				
+				String zeros = "";
+				String end = numString.substring(i, numString.length());
+				for(int in = 0; in < end.length(); in++)
+				{
+					zeros = zeros + "0";
+				}
+				
+				String full = firstHalf + zeros;
+				
+				res = Long.parseLong(full);
+				break;
+			}
+		}
+		
+		if(res == 0)
+		{
+			int base = Integer.parseInt(numString.substring(numString.length() -1, numString.length()));
+			tmp = tmp + Utility.pow(base, power);
+			if(tmp == num && num != 0)
+			{
+				out.println(num);
+				out.flush();
+				found++;
+			}
+			res = num + 1;
+		}
+		
+		return res;
+	}
+	
+	public static BigInteger nextBig(BigInteger num, PrintWriter out)
+	{
+		BigInteger res = BigInteger.ZERO;
+		BigInteger tmp = BigInteger.ZERO;
+		String numString = num.toString();
+		int power = numString.length();
+		
+		for(int i = 0; i < numString.length() - 1; i++)
+		{
+			int base = Integer.parseInt(numString.substring(i, i+1));
+			BigInteger bigBase = new BigInteger("" + base);
+			tmp = tmp.add(bigBase.pow(power));
+			
+			if(tmp.compareTo(num) == 1 && i == 0)
+			{
+				String first = "" + 1;
+				
+				String zeros = "";
+				for(int in = 0; in < numString.length(); in++)
+				{
+					zeros = zeros + "0";
+				}
+				
+				String full = first + zeros;
+				
+				res = new BigInteger(full);
+				break;
+			}
+			else if(tmp.compareTo(num) == 1 && i == 1)
+			{
+				String first = "" + (new BigInteger("" + numString.charAt(0))).add(BigInteger.ONE);
+				String zeros = "";
+				String end = numString.substring(i, numString.length());
+				for(int in = 0; in < end.length(); in++)
+				{
+					zeros = zeros + "0";
+				}
+				
+				String full = first + zeros;
+				
+				res = new BigInteger(full);
+				break;
+			}
+			else if(tmp.compareTo(num) == 1)
+			{
+				String firstHalf = "" + (new BigInteger(numString.substring(0,i))).add(BigInteger.ONE);
+				
+				String zeros = "";
+				String end = numString.substring(i, numString.length());
+				for(int in = 0; in < end.length(); in++)
+				{
+					zeros = zeros + "0";
+				}
+				
+				String full = firstHalf + zeros;
+				
+				res = new BigInteger(full);
+				break;
+			}
+		}
+		
+		if(res.equals(BigInteger.ZERO))
+		{
+			int base = Integer.parseInt(numString.substring(numString.length() -1, numString.length()));
+			BigInteger bigBase = new BigInteger("" + base);
+			tmp = tmp.add(bigBase.pow(power));
+			if(tmp.equals(num) && !num.equals(BigInteger.ZERO))
+			{
+				out.println(num);
+				out.flush();
+				found++;
+			}
+			res = num.add(BigInteger.ONE);
+		}
+		
+		return res;
 	}
 	
 	/**
@@ -172,7 +387,7 @@ public class Narcissistic
 		for(int i = 0; i < numString.length(); i++)
 		{
 			int base = Integer.parseInt("" + numString.charAt(i));
-			long tmp = pow(base, power);
+			long tmp = Utility.pow(base, power);
 			
 			testNumber = testNumber + tmp;
 			
@@ -226,21 +441,5 @@ public class Narcissistic
 		}
 		
 		return false;
-	}
-	
-	/**
-	 * This is a simple power method, which was written, because the java Math.pow
-	 * was cutting off some digits at the end of huge calculations, and that
-	 * was messing up the whole program
-	 */
-	private static long pow(int base, int power)
-	{
-		long result = base;
-		for(int i = 0; i < power - 1; i++)
-		{
-			result = result*base;
-		}
-		
-		return result;
 	}
 }
