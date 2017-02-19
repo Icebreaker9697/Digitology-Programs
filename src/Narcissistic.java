@@ -8,7 +8,7 @@ public class Narcissistic
 	private static int found;
 	public static void main(String[] args) throws FileNotFoundException
 	{
-		File f = new File("Number Lists/NarcissisticNumbers.txt");
+		File f = new File("Number Lists/Base10NarcissisticNumbers.txt");
 		PrintWriter out = new PrintWriter(f);
 		
 		long start = System.nanoTime();

@@ -38,7 +38,7 @@ public class PolyDivisible
 		int found = 0;
 		
 		//start at 0 and count up
-		int curInt = 0;
+		int curInt = 1;
 		
 		//start as an int
 		while(curInt >= 0)
@@ -85,7 +85,7 @@ public class PolyDivisible
 		
 		
 		//convert over to BigInteger
-		BigInteger bigCur = new BigInteger("9220000000000000000");
+		BigInteger bigCur = new BigInteger("9222000000000000000");
 		
 		while(true)
 		{
@@ -95,10 +95,6 @@ public class PolyDivisible
 				out.flush();
 				found = found + 1;
 				if(found%100 == 0)
-				{
-					System.out.println(found);
-				}
-				if(found > 20400)
 				{
 					System.out.println(found);
 				}
@@ -130,15 +126,27 @@ public class PolyDivisible
 					int firstGroup = Integer.parseInt(num.substring(0,i));
 					if(firstGroup%(i) != 0)
 					{
-						String toAdd = "1";
+						String toAdd = "" + (i-firstGroup%i);
+						String zeros = "";
 						String end = num.substring(i+1, num.length());
-						for(int in = 0; in < end.length(); in++)
+						for(int in = 0; in < end.length() + 1; in++)
 						{
-							toAdd = toAdd + "0";
+							zeros = zeros + "0";
 						}
 						
-						int res = num1 + Integer.parseInt(toAdd);
-						return res;
+						String firstHalf = num.substring(0, i);
+						int firstH = Integer.parseInt(firstHalf);
+						firstH = firstH + Integer.parseInt(toAdd);
+						
+						try
+						{
+							int res = Integer.parseInt("" + firstH + zeros);
+							return res;	
+						}
+						catch(NumberFormatException ee)
+						{
+							return -1;
+						}
 					}
 			}
 		}
@@ -157,15 +165,27 @@ public class PolyDivisible
 					long firstGroup = Long.parseLong(num.substring(0,i));
 					if(firstGroup%(i) != 0)
 					{
-						String toAdd = "1";
+						String toAdd = "" + (i-firstGroup%i);
+						String zeros = "";
 						String end = num.substring(i+1, num.length());
-						for(int in = 0; in < end.length(); in++)
+						for(int in = 0; in < end.length() + 1; in++)
 						{
-							toAdd = toAdd + "0";
+							zeros = zeros + "0";
 						}
 						
-						long res = num1 + Long.parseLong(toAdd);
-						return res;
+						String firstHalf = num.substring(0, i);
+						long firstH = Long.parseLong(firstHalf);
+						firstH = firstH + Long.parseLong(toAdd);
+						
+						try
+						{
+							long res = Long.parseLong("" + firstH + zeros);
+							return res;	
+						}
+						catch(NumberFormatException ee)
+						{
+							return -1;
+						}
 					}
 			}
 		}
@@ -185,15 +205,21 @@ public class PolyDivisible
 					BigInteger i1 = new BigInteger("" + i);
 					if(!firstGroup.mod(i1).equals(BigInteger.ZERO))
 					{
-						String toAdd = "1";
+						BigInteger bigger = new BigInteger("" + i);
+						String toAdd = "" + (bigger.subtract(firstGroup.mod(bigger))).toString();
+						String zeros = "";
 						String end = num.substring(i+1, num.length());
-						for(int in = 0; in < end.length(); in++)
+						for(int in = 0; in < end.length() + 1; in++)
 						{
-							toAdd = toAdd + "0";
+							zeros = zeros + "0";
 						}
 						
-						BigInteger res = num1.add(new BigInteger(toAdd));
-						return res;
+						String firstHalf = num.substring(0, i);
+						BigInteger firstH = new BigInteger(firstHalf);
+						firstH = firstH.add(new BigInteger(toAdd));
+
+						BigInteger res = new BigInteger("" + firstH + zeros);
+						return res;	
 					}
 			}
 		}
